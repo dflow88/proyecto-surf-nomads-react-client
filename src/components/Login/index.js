@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
-import UserContext from './../../context/UserContext'
-import logo from './../../images/surf-nomada-1.png'
+import UserContext from '../../context/users/UserContext'
+import logo from './../../images/surfnomadalogo.png'
 
 export default function Login() {
 
@@ -27,10 +27,9 @@ export default function Login() {
     }
 
     const sendData = (event) => {
-        
+        console.log('send data being fired');
         event.preventDefault()
         return loginUser(data)
-
     }
 
 

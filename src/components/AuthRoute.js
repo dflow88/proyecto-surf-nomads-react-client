@@ -4,7 +4,7 @@ import {
     Route, 
     Redirect } from "react-router-dom";
 
-import UserContext from './../context/UserContext'
+import UserContext from '../context/users/UserContext'
 
 
 
@@ -29,7 +29,7 @@ export default function AuthRoute ( { component: Component, ...props} ){
 
         verifyingAuthStatus()
         
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [ authStatus ])
 
 
@@ -39,13 +39,12 @@ export default function AuthRoute ( { component: Component, ...props} ){
         {...props}
         render={ ( ) => {
 
-            if(loading) return null
+            if (loading) return null
 
             return authStatus ?
             (<Redirect to="/dashboard" />)
             :
             (<Component {...props} />)
-
         }}
     />)
 

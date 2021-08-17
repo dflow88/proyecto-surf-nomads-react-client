@@ -4,7 +4,7 @@ import {
     Route, 
     Redirect } from "react-router-dom";
 
-import UserContext from '../context/UserContext'
+import UserContext from '../context/users/UserContext'
 
 
 
@@ -31,7 +31,7 @@ export default function PrivateRoute ( { component: Component, ...props} ){
         verifyingAuthStatus()
         
         
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [ authStatus ])
 
 
@@ -46,7 +46,7 @@ export default function PrivateRoute ( { component: Component, ...props} ){
             return authStatus ?
             (<Component {...props} />)
             :
-            (<Redirect to="/" />)
+            (<Redirect to="/login" />)
 
         }}
     />)

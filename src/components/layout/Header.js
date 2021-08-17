@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
 
-import UserContext from './../../context/UserContext'
+import UserContext from '../../context/users/UserContext'
 
-import logo from './../../images/surf-nomada-1.png'
+import logo from './../../images/surfnomadalogo.png'
 
 import { Link } from 'react-router-dom'
 
@@ -23,7 +23,6 @@ export default function Header() {
     } = userCtx
 
     const showNav = (event) => {
-
         event.preventDefault()
         setNav(!nav)
 
@@ -37,7 +36,7 @@ export default function Header() {
                         <div class="flex items-center">
                             <Link to="/">
                                 <span class="sr-only">Workflow</span>
-                                <img class="h-10 w-auto" src={logo} alt="" />
+                                <img class="h-12 w-auto" src={logo} alt="" />
                             </Link>
                             <div class="block ml-10 space-x-8 lg:block">
                                 <Link to="/guides" class="text-base font-medium text-sky-600 hover:text-sky-700" key="Solutions">
@@ -47,20 +46,45 @@ export default function Header() {
                                 <Link to="/tours" class="text-base font-medium text-sky-600 hover:text-sky-700" key="Pricing">
                                     Tours
                                 </Link>
-
-                                <Link to="/" class="text-base font-medium text-sky-600 hover:text-sky-700" key="Docs">
-                                    About us
+                                {!authStatus ?
+                                <Link to="/guide-signup" class="text-base font-medium text-teal-600 hover:text-teal-700" key="Docs">
+                                    Are you a guide?
                                 </Link>
-
+                                : null
+                                }
                                 <Link to="/" class="text-base font-medium text-sky-600 hover:text-sky-700" key="Company">
                                     
                                 </Link>
                             </div>
                         </div>
-                        <div class="ml-10 space-x-4">
-                            <Link to="/login" class="inline-block bg-sky-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Login</Link>
-                            <Link to="/signup" class="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-sky-600 hover:bg-sky-50">Sign up</Link>
-                        </div>
+                        {
+                        !authStatus ?
+                                    
+                            <div class="ml-10 space-x-4">
+                                <Link to="/login" class="inline-block bg-sky-500 py-2 px-4 border border-transparent rounded-md text-base font-medium text-white hover:bg-opacity-75">Login</Link>
+                                <Link to="/signup" class="inline-block bg-white py-2 px-4 border border-transparent rounded-md text-base font-medium text-sky-600 hover:bg-sky-50">Sign up</Link>
+                            </div>
+                        :
+                            <div>
+                                <button
+                                    onClick={(e) => { showNav(e) }}
+                                    type="button" className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                    <img className="h-8 w-8 rounded-full" src="https://pbs.twimg.com/profile_images/1377113473092444170/KM6L25Ch_400x400.jpg" alt="" />
+                                </button>
+                            </div>
+                        }
+                        {
+                        nav ?
+                            
+                                <>
+                                    <div className="origin-top-right absolute z-50 right-14 top-16 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+                                        <Link to="/" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</Link>
+                                        <Link to="/" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</Link>
+                                        <button onClick={(e) => { logOut(); showNav(e) }} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Log out</button>
+                                    </div>
+                                </>
+                             : null
+                        }
                     </div>
 
                 </nav>

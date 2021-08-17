@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 
-import UserContext from '../../context/UserContext'
+import UserContext from '../../context/users/UserContext'
 
 export default function Signup() {
 
@@ -17,7 +17,8 @@ export default function Signup() {
         lastName: "",
         username: "",
         email: "",
-        password: ""
+        password: "",
+        role: "guide"
     })
 
     
@@ -46,8 +47,11 @@ export default function Signup() {
                     <div className="mx-auto w-full max-w-sm lg:w-96">
                         <div>
                             <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                                Create your account
+                                Welcome!
                             </h2>
+                            <p className="mt-3 max-w-md mx-auto text-lg text-gray-500 sm:text-xl md:mt-5 md:max-w-3xl">
+                                Signup and offer your tours with us!
+                            </p>
                         </div>
 
                         <div className="mt-8">
@@ -148,7 +152,7 @@ export default function Signup() {
                     </div>
                 </div>
                 <div className="hidden lg:block relative w-0 flex-1">
-                    <img className="absolute inset-0 h-full w-full object-cover" src="https://ec2-im-1.msw.ms/md/image.php?id=373294&type=PHOTOLAB&resize_type=STREAM_MEDIUM_SQUARE&fromS3" alt="" />
+                    <img className="absolute inset-0 h-full w-full object-cover" src="https://www.surf-forecast.com/system/images/10114/large/Salina-Cruz.jpg?1393265211" alt="" />
                 </div>
             </div>
 
