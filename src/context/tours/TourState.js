@@ -1,5 +1,5 @@
-import React, {useReducer, useState} from 'react'
-import axios from 'axios'
+import React, {useReducer} from 'react'
+import axiosClient from './../../config/axios'
 
 import TourContext from './TourContext'
 import TourReducer from './TourReducer'
@@ -9,33 +9,18 @@ const TourState = (props) => {
 
     const initialState = {
         tours: [],
+        tour: {
+            amenities: []
+        },
+        allAmenities: []
     }
 
     const [ globalState, dispatch ] = useReducer(TourReducer, initialState)
 
-    const [ createActive, setCreateActive ] = useState(false)
-
-    const [ newTour, setNewTour ] = useState({
-        name: "",
-        area: "",
-        country: "",
-        guide: "",
-        priceDay: "",
-        description: "",
-        amenities: ""
-    })
-
-
-    const activateCreate = (event) => {
-        event.preventDefault()
-        setCreateActive(true)
-    }
-
-
 
     const getTours = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tours`)
+            const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/tours`)
             const updatedTours = res.data
 
             dispatch({
@@ -48,32 +33,42 @@ const TourState = (props) => {
         }
     }
 
-    const findTour = async () => {
+    const getAmenities = async () => {
         try {
-            const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tours/tour-specs/611ae780c9dc3e08c61b1981`)
-            const foundTour = res.data
-            console.log(foundTour)
+            const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/amenities`)
+            const foundAmenities = res.data.amenities
+
+            dispatch({
+                type: "GET_AMENITIES",
+                payload: foundAmenities
+            })
 
         } catch (error) {
-
+            console.log(error)
         }
     }
 
+    const findTour = async (id) => {
+        try {
+            const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/tours/tour-specs/${id}`)
+            const foundTour = res.data
+
+            dispatch({
+                type: "FIND_TOUR",
+                payload: foundTour
+            })
+
+        } catch (error) {
+        }
+    }
+
+
+
     const createTour = async (dataForm) => {
         try {
-            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/tours/create`, dataForm)
+            const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/tours/create`, dataForm)
 
-            getTours()
-            setCreateActive(false)
-            setNewTour({
-                name: "",
-                area: "",
-                country: "",
-                guide: "",
-                priceDay: "",
-                description: "",
-                amenities: ""
-            })
+
         } catch (error) {
 
         }
@@ -90,7 +85,7 @@ const TourState = (props) => {
             description: dataForm.description,
             amenities: dataForm.amenities
         }
-            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/tours/update`, form )
+            const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/tours/update`, form )
             
             getTours()
 
@@ -102,7 +97,7 @@ const TourState = (props) => {
         }
         console.log(dataForm)
 
-        const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/tours/delete`, form )
+        const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/tours/delete`, form )
             
         getTours()
     }
@@ -111,16 +106,14 @@ const TourState = (props) => {
         <TourContext.Provider
             value={{
                 tours: globalState.tours,
+                tour: globalState.tour,
+                allAmenities: globalState.allAmenities,
                 getTours,
                 createTour,
-                activateCreate,
-                createActive,
-                setCreateActive,
-                newTour,
-                setNewTour,
                 updateTour,
                 deleteTour,
-                findTour
+                findTour,
+                getAmenities
             }}
         >
             {props.children}

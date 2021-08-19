@@ -4,7 +4,6 @@ import './App.css';
 import {
   Switch,
   Route,
-  useParams,
   BrowserRouter as Router
 } from 'react-router-dom'
 
@@ -20,9 +19,9 @@ import SignupGuide from './components/SignupGuide'
 import Dashboard from './components/Dashboard'
 import Stripe from './components/Stripe'
 
-
 import UserState from './context/users/UserState'
 import TourState from './context/tours/TourState'
+import ReservationState from './context/reservations/ReservationState'
 
 import PrivateRoute from './components/PrivateRoute'
 import AuthRoute from './components/AuthRoute.js'
@@ -34,6 +33,7 @@ function App() {
 
     <UserState>
     <TourState>
+    <ReservationState>
       <Router>
 
         <Header />
@@ -51,12 +51,13 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/tours" component={Tours} />
           <Route exact path="/guides" component={Guides} />
-          <Route exact path="/tour-specs/:tourId" component={TourSpecs} />
+          <PrivateRoute exact path="/tour-specs/:tourId" component={TourSpecs} />
           <Route exact path="/stripe" component={Stripe} /> {/* NO PUEDO DARLE A PRIVATE CON ESTA */}
 
         </Switch>
         
       </Router>
+    </ReservationState>
     </TourState>
     </UserState>
 

@@ -8,6 +8,21 @@ export default (globalState, action) => {
                 tours: action.payload
             }
 
+        case "FIND_TOUR":
+            
+            return {
+                ...globalState,
+                tour: action.payload
+            }
+
+        case "GET_AMENITIES":
+            
+            return {
+                ...globalState,
+                allAmenities: action.payload
+            }
+            
+
         default:
             return globalState
     }

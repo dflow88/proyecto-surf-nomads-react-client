@@ -36,9 +36,9 @@ console.log(tours)
             <div className="max-w-7xl mx-auto py-10 px-4 sm:py-15 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8">
                 {
-                    tours.map((e) => {
+                    tours.map((e, i) => {
                         return(
-                            <a href={`/tour-specs/${e._id}`} className="group">
+                            <a key={i} href={`/tour-specs/${e._id}`} className="group">
                                 <div className="aspect-w-1 aspect-h-2 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-1 xl:aspect-h-2">
                                 <img src={`${e.pictures[0]}`} alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="w-full h-full object-center object-cover group-hover:opacity-75" />
                                 </div>
