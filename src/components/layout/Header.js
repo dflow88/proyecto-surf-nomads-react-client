@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 
 import UserContext from '../../context/users/UserContext'
+import TourContext from '../../context/tours/TourContext'
 
 import logo from './../../images/surfnomadalogo.png'
 
@@ -19,8 +20,13 @@ export default function Header() {
     const {
         authStatus,
         user,
-        logOut
+        logOut,
     } = userCtx
+
+    const tourCtx = useContext(TourContext)
+    const{
+        killTour
+    } = tourCtx
 
     const showNav = (event) => {
         event.preventDefault()
@@ -80,7 +86,7 @@ export default function Header() {
                                     <div className="origin-top-right absolute z-50 right-14 top-16 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                                         <form action="/dashboard"><button type="submit" onClick={(e) => { showNav(e) }} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</button></form>
                                         <Link to="/" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</Link>
-                                        <button onClick={(e) => { logOut(); showNav(e) }} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Log out</button>
+                                        <button onClick={(e) => { logOut(); killTour(); showNav(e) }} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Log out</button>
                                     </div>
                                 </>
                              : null

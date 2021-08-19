@@ -22,6 +22,14 @@ export default (globalState, action) => {
                 allAmenities: action.payload
             }
             
+        case "KILL_TOUR":
+        
+            return {
+                ...globalState,
+                tour: {
+                    amenities: []
+                }
+            }
 
         default:
             return globalState

@@ -84,14 +84,7 @@ export default function ManageTour() {
         console.log(newTour)
         updateTour(newTour)
         setEditActive(false)
-        // setEditActive(false)
-        // setNewTour({
-        //     name: "",
-        //     country: "",
-        //     biggestSizeM: "",
-        //     season: "",
-        //     tourType: ""
-        // })
+
     }
 
     const activateEdit = (event, element) => {
@@ -99,30 +92,30 @@ export default function ManageTour() {
         setEditActive(true)
     }
 
-    const eraseTour = (event, element) => {
-        event.preventDefault()
-        deleteTour(element)
-    }
+    // const eraseTour = (event, element) => {
+    //     event.preventDefault()
+    //     deleteTour(element)
+    // }
 
     const findTourbyGuideId =  (guideId) => {
-          tours.map( async (element) => {
+
+          tours.map((element) => {
+            
              if (element.guide[0] === guideId) {
-                await findTour(element._id)
-            }
+                return findTour(element._id)
+            } 
         })
     }
 
-    useEffect( async () => {
+    useEffect( () => {
+        getTours()
 
-        getAmenities()
-        await getTours()
-        await findTourbyGuideId(user._id)
+        findTourbyGuideId(user._id)
         setCheckboxValue(false)
+        getAmenities()
         
         // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [])
-
-
 
     return (
         <div>
@@ -246,7 +239,7 @@ export default function ManageTour() {
                                                 </div>
                                             </div>
                                                 <select class="w-1/2 h-full" type="text" name="amenities" multiple>
-                                                    {
+                                                    { 
                                                         allAmenities.map((e,i) => {
                                                             return(
                                                                         <option key={i} value={e._id}>{e.name}</option>
@@ -285,7 +278,7 @@ export default function ManageTour() {
                                         Tour Name
                                     </label>
                                     <div className="mt-1">
-                                        {tour ? <p className="text-base text-gray-900">{tour.name}</p> : <p className="text-base text-gray-400">Give your tour a cool name</p>}
+                                        {tour.name ? <p className="text-base text-gray-900">{tour.name}</p> : <p className="text-base text-gray-400">Give your tour a cool name</p>}
                                     </div>
                                 </div>
 
@@ -294,7 +287,7 @@ export default function ManageTour() {
                                         Short description
                                     </label>
                                     <div className="mt-1">
-                                    {tour ? <p className="text-base text-gray-900">{tour.shortDescription}</p> : <p className="text-base text-gray-400">Input short description</p>}
+                                    {tour.name ? <p className="text-base text-gray-900">{tour.shortDescription}</p> : <p className="text-base text-gray-400">Input short description</p>}
                                     </div>
                                 </div>           
 
@@ -302,7 +295,7 @@ export default function ManageTour() {
                                     <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                                     Main description
                                     </label>
-                                    {tour ? <p className="text-base text-gray-900">{tour.description}</p> : <p className="text-base text-gray-400">Describe your tour</p>}
+                                    {tour.name ? <p className="text-base text-gray-900">{tour.description}</p> : <p className="text-base text-gray-400">Describe your tour</p>}
                                 </div>
 
                                 <div>
@@ -310,7 +303,7 @@ export default function ManageTour() {
                                         Country
                                     </label>
                                     <div className="mt-1">
-                                    {tour ? <p className="text-base text-gray-900">{tour.country}</p> : <p className="text-base text-gray-400">Missing country</p>}
+                                    {tour.name ? <p className="text-base text-gray-900">{tour.country}</p> : <p className="text-base text-gray-400">Missing country</p>}
                                     </div>
                                 </div>
                                 <div className="space-y-1">
@@ -318,7 +311,7 @@ export default function ManageTour() {
                                         Area
                                     </label>
                                     <div className="mt-1">
-                                    {tour ? <p className="text-base text-gray-900">{tour.area}</p> : <p className="text-base text-gray-400">Missing area</p>}
+                                    {tour.name ? <p className="text-base text-gray-900">{tour.area}</p> : <p className="text-base text-gray-400">Missing area</p>}
                                     </div>
                                 </div>    
 
@@ -327,7 +320,7 @@ export default function ManageTour() {
                                         Daily price per person (US$)
                                     </label>
                                     <div className="mt-1">
-                                    {tour ? <p className="text-base text-gray-900">{tour.priceDay}</p> : <p className="text-base text-gray-400">Put a price for your tour</p>}
+                                    {tour.name ? <p className="text-base text-gray-900">{tour.priceDay}</p> : <p className="text-base text-gray-400">Put a price for your tour</p>}
                                     </div>
                                 </div>                
 
@@ -396,8 +389,8 @@ export default function ManageTour() {
                                 <div class="pt-5 sm:grid sm:grid-cols-2">
                                     <div class="flex justify-center">
 
-                                        <button onClick={tour ? (e) => {activateEdit(e, tour)} : (e) => {activateCreate(e)}} type="button" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
-                                            {tour ? "Edit" : "Crear nuevo tour"}
+                                        <button onClick={tour.name ? (e) => {activateEdit(e, tour)} : (e) => {activateCreate(e)}} type="button" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                            {tour.name ? "Edit" : "Crear nuevo tour"}
                                         </button>
 
                                     </div>

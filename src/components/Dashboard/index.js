@@ -14,7 +14,6 @@ export default function Dashboard() {
         token,
         user
     } = contextUser
-    console.log(user)
 
     const [ reservationsActive, setReservationsActive ] = useState(true)
     const [ manageTourActive, setManageTourActive ] = useState(false)

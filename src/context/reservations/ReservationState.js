@@ -18,7 +18,7 @@ const ReservationState = (props) => {
         try {
             const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations`)
             const updatedReservations = res.data
-
+            // console.log(updatedReservations)
             dispatch({
                 type: "GET_RESERVATIONS",
                 payload: updatedReservations
@@ -28,21 +28,6 @@ const ReservationState = (props) => {
 
         }
     }
-
-    const findReservation = async (id) => {
-        try {
-            const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/reservation-specs/${id}`)
-            const foundReservation = res.data
-
-            dispatch({
-                type: "FIND_RESERVATION",
-                payload: foundReservation
-            })
-
-        } catch (error) {
-        }
-    }
-
 
 
     const createReservation = async (dataForm) => {
@@ -93,8 +78,6 @@ const ReservationState = (props) => {
                 createReservation,
                 updateReservation,
                 deleteReservation,
-                findReservation,
-
             }}
         >
             {props.children}

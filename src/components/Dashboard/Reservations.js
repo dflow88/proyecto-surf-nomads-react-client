@@ -1,7 +1,6 @@
 import React, {useState,
     useContext, useEffect} from 'react'
 
-import TourContext from '../../context/tours/TourContext'
 import UserContext from '../../context/users/UserContext'
 import ReservationContext from '../../context/reservations/ReservationContext'
 
@@ -10,22 +9,47 @@ export default function Reservations() {
 
     const contextReservation = useContext(ReservationContext)
     const {
-        getReservations
+        getReservations,
+        reservations,
     } = contextReservation
 
-    const contextTour = useContext(TourContext)
-    
-    const {
-        tour,
-        findTour
-    } = contextTour
+
+    const [userReservations, setUserReservations] = useState([])
+
+
 
     const contextUser = useContext(UserContext)
     const {
         user
     } = contextUser
 
+    console.log(reservations[0])
 
+    const findReservations = (role) => {
+
+        const resFound = []
+        if (role.role === "user") {
+            reservations.map((res) => {
+                if (role._id === res.user[0]._id) {
+                    console.log(resFound)
+                    resFound.push()
+                    
+                }
+            })
+            setUserReservations(resFound)
+            
+        }
+    }
+
+    console.log(userReservations)
+
+    useEffect( async () => {
+
+        await getReservations()
+        findReservations(user)
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    } , [])
 
     return (
         <div>

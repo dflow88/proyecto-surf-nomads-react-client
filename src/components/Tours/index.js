@@ -15,7 +15,6 @@ export default function Tours() {
 
 
     useEffect( () => {
-        console.log("Useeffect")
         getTours()
         
         // eslint-disable-next-line react-hooks/exhaustive-deps

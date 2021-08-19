@@ -52,7 +52,7 @@ const TourState = (props) => {
         try {
             const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/tours/tour-specs/${id}`)
             const foundTour = res.data
-
+            console.log(foundTour)
             dispatch({
                 type: "FIND_TOUR",
                 payload: foundTour
@@ -62,6 +62,20 @@ const TourState = (props) => {
         }
     }
 
+    const findTourByGuideId =  (guideId, tours) => {
+        try {
+            tours.map( (element) => {
+                if (element.guide[0] === guideId) {
+                    console.log(element.guide[0])
+                    console.log(guideId)
+                    return findTour(element._id)
+                }
+            
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }   
 
 
     const createTour = async (dataForm) => {
@@ -91,6 +105,12 @@ const TourState = (props) => {
 
     }
 
+    const killTour = () => {
+        dispatch({
+            type: "KILL_TOUR"
+        })
+    }
+
     const deleteTour = async (dataForm) => {
         const form = {
             tourId: dataForm._id
@@ -112,8 +132,10 @@ const TourState = (props) => {
                 createTour,
                 updateTour,
                 deleteTour,
+                findTourByGuideId,
                 findTour,
-                getAmenities
+                getAmenities,
+                killTour
             }}
         >
             {props.children}

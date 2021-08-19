@@ -91,7 +91,7 @@ const UserState = (props) => {
 
     }
 
-    const logOut = async () => {
+    const logOut = () => {
 
         dispatch({
             type: "LOGOUT_USER"

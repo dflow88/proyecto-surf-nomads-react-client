@@ -52,8 +52,6 @@ export default  function TourSpecs() {
         await setEndDateLocal(end);
     }
 
-    
-
     const updateTotalPriceLocal = async (event) => {
         event.preventDefault(event)
         await setTotalPriceLocal((endDateLocal - startDateLocal)/(1000*60*60*24)*tour.priceDay)
@@ -88,9 +86,11 @@ export default  function TourSpecs() {
 
     const sendForm = async (event) => {
         event.preventDefault()
+        const startD = moment(startDateLocal).format("L")
+        const endD = moment(endDateLocal).format("L")
         setNewReservation({
-            startDate: await moment(startDateLocal).format("L"),
-            endDate: await moment(endDateLocal).format("L"),
+            startDate: startD,
+            endDate: endD,
             user: await user._id,
             guide: await tour.guide[0],
             tour: await tour._id,
@@ -101,9 +101,10 @@ export default  function TourSpecs() {
     }
 
     const processCreate = () => {
+        console.log(newReservation)
         createReservation(newReservation)
     }
-
+    console.log(tour)
     return (
         <div>
 
@@ -374,7 +375,7 @@ export default  function TourSpecs() {
                                     </div>
                                     </div>
                                     {/* Main */}
-                                    <form onSubmit={(e) => {sendForm(e)}}>
+                                    
                                         <div>
                                         <div class="pb-1 sm:pb-6">
                                             <div>
@@ -387,12 +388,14 @@ export default  function TourSpecs() {
                                                     <div class="flex items-center">
                                                     <h3 class="font-bold text-xl text-gray-900 sm:text-2xl">{tour.name}</h3>
                                                     </div>
-                                                    <p class="text-sm text-gray-500">Guide: {tour.guide[0].firstName}</p>
+                                                    <p class="text-sm text-gray-500">Guide: { tour.guide[0] ? tour.guide[0].firstName : null }</p>
                                                 </div>
                                                 <div class="mt-5 flex flex-wrap space-y-3 sm:space-y-0 sm:space-x-3">
+                                                <form onSubmit={(e) => {sendForm(e)}}>
                                                     <button type="submit" class="flex-shrink-0 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:flex-1">
                                                     Proceed to pay
                                                     </button>
+                                                </form>
                                                     <button type="button" onClick={(e) => {activateConfirm(e)}} class="flex-1 w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                                     Cancel
                                                     </button>
@@ -453,7 +456,7 @@ export default  function TourSpecs() {
                                             </dl>
                                         </div>
                                         </div>
-                                    </form>
+                                    
                                 </div>
                                 </div>
                             </div>
