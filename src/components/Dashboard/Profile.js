@@ -8,7 +8,6 @@ export default function Profile() {
 
     const contextUser = useContext(UserContext)
     const {
-        token,
         user,
         updateUser,
     } = contextUser
@@ -32,10 +31,8 @@ export default function Profile() {
     }
 
     const sendForm = (event, element) => {
-        console.log(event)
         event.preventDefault()
         updateUser(element, user)
-
 
     }
 
@@ -158,7 +155,7 @@ export default function Profile() {
                         
 
                         <div className="mt-6 grid grid-cols-2">
-                            <form className="space-y-6" //onSubmit={(e)=> { sendForm(e) }}
+                            <form className="space-y-6"
                                     >
 
                                 <div>

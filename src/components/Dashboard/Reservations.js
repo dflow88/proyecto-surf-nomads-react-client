@@ -57,7 +57,7 @@ console.log(user)
                                                     Dates
                                                 </th>
                                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    No of people
+                                                    No of days
                                                 </th>
                                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Price
@@ -72,7 +72,7 @@ console.log(user)
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="flex items-center">
                                                         <div class="flex-shrink-0 h-10 w-10">
-                                                            <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60" alt="" />
+                                                            <img class="h-10 w-10 rounded-full" src="https://scontent.foax2-1.fna.fbcdn.net/v/t1.6435-9/90194677_10163096065755282_5984159194574487552_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeErkrT0OcP5Qom5JfMZPmcG6IHR0aSitYnogdHRpKK1ifRG7FZWl28uiC01sxhn4Tk&_nc_ohc=kRitRK-5VO8AX9TCiDh&_nc_ht=scontent.foax2-1.fna&oh=cf3a80e2229e93426603683a579f1f76&oe=6145CDA2" alt="" />
                                                         </div>
                                                         <div class="ml-4">
                                                             <div class="text-sm font-medium text-gray-900">
@@ -86,14 +86,13 @@ console.log(user)
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="text-sm text-gray-900">08/21/2021 - 08/26/2021</div>
-                                                    <div class="text-sm text-gray-500">Optimization</div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    3
+                                                    5
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                        $ 840.00
+                                                        US$ 600.00
                                                     </span>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

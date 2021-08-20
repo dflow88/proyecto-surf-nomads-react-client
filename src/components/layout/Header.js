@@ -74,7 +74,7 @@ export default function Header() {
                                     onClick={(e) => { showNav(e) }}
                                     type="button" className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                                     {user ?
-                                    <img className="h-8 w-8 rounded-full" src={user.picture} alt={logo} />
+                                    <img className="h-8 w-8 rounded-full" src={user.picture} alt="" />
                                     : null}
                                 </button>
                             </div>

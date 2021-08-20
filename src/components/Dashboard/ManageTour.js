@@ -54,7 +54,6 @@ export default function ManageTour() {
         description:"",
         priceDay:"",
         country: "",
-        // amenities: [],
         area: "",
         guide: user._id,
         picture1: "",
@@ -73,8 +72,6 @@ export default function ManageTour() {
 
     const handleChange = (event) => {
         event.preventDefault()
-        console.log(newTour)
-        console.log(event.target.value)
         setNewTour({
             ...newTour,
             [event.target.name]: event.target.value
@@ -400,7 +397,7 @@ export default function ManageTour() {
 
                                 <div className="space-y-1">
                                     <label htmlFor="priceDay" className="block text-sm font-medium text-gray-700">
-                                        Daily price per person (US$)
+                                        Daily price (US$)
                                     </label>
                                     <div className="mt-1">
                                     {tour.name ? <p className="text-base text-gray-900">{tour.priceDay}</p> : <p className="text-base text-gray-400">Put a price for your tour</p>}
