@@ -64,7 +64,11 @@ export default function ManageTour() {
     })
 
 
-
+    const turnOff = (event) => {
+        event.preventDefault();
+        setCreateActive(false);
+        setEditActive(false)
+    }
 
 
     const handleChange = (event) => {
@@ -79,8 +83,7 @@ export default function ManageTour() {
 
     const sendForm = (event) => {
         event.preventDefault()
-        if (createActive) {createTour(newTour)}
-        if (editActive) {editTour(event)}
+        createTour(newTour)
     }
 
     const editTour = (event) => {
@@ -140,7 +143,7 @@ export default function ManageTour() {
 
                     { editActive || createActive ?
                         <div className="mt-6 grid grid-cols-2">
-                            <form className="space-y-6" onSubmit={(e)=> { sendForm(e) }}>
+                            <form className="space-y-6" onSubmit={(e)=> { editActive ? editTour(e) : sendForm(e) }}>
 
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -329,7 +332,7 @@ export default function ManageTour() {
 
                                 <div class="pt-5 sm:grid sm:grid-cols-2">
                                     <div class="flex justify-center">
-                                        <button type="button" onClick={(e) => {setCreateActive(false); setEditActive(false)}} class="ml-3 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-black bg-white hover:bg-sky-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                        <button type="button" onClick={(e) => {turnOff(e)}} class="ml-3 inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-black bg-white hover:bg-sky-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                             Cancel
                                         </button>
                                         <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
@@ -339,17 +342,17 @@ export default function ManageTour() {
                                 </div>
                             </form>
                             <div>
-                                <img src={tour.picture1} alt=""/>
-                                <img src={tour.picture2} alt=""/>
-                                <img src={tour.picture3} alt=""/>
-                                <img src={tour.picture4} alt=""/>
+                                <img className="w-1/2"  src={tour.picture1} alt=""/>
+                                <img className="w-1/2"  src={tour.picture2} alt=""/>
+                                <img className="w-1/2"  src={tour.picture3} alt=""/>
+                                <img className="w-1/2"  src={tour.picture4} alt=""/>
                             </div>
                         </div>
                             
                     :
                         
 
-                        <div className="mt-6">
+                        <div className="mt-6 grid grid-cols-2">
                             <form className="space-y-6" onSubmit={(e)=> { sendForm(e) }}
                                     >
 
@@ -476,6 +479,12 @@ export default function ManageTour() {
                                     </div>
                                 </div>
                             </form>
+                            <div>
+                                <img className="w-1/2" src={tour.picture1} alt=""/>
+                                <img className="w-1/2" src={tour.picture2} alt=""/>
+                                <img className="w-1/2" src={tour.picture3} alt=""/>
+                                <img className="w-1/2" src={tour.picture4} alt=""/>
+                            </div>
                         </div>
                     }
                     </div>
