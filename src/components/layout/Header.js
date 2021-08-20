@@ -31,9 +31,7 @@ export default function Header() {
     const showNav = (event) => {
         event.preventDefault()
         setNav(!nav)
-
     }
-
     return (
         <>
             <header class="bg-white divide-y-4 divide-red-100 divide-opacity-75 divide-solid shadow" >
@@ -74,8 +72,8 @@ export default function Header() {
                             <div>
                                 <button
                                     onClick={(e) => { showNav(e) }}
-                                    type="button" className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                    <img className="h-8 w-8 rounded-full" src="https://pbs.twimg.com/profile_images/1377113473092444170/KM6L25Ch_400x400.jpg" alt="" />
+                                    type="button" className="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                    <img className="h-8 w-8 rounded-full" src={user.picture} alt={logo} />
                                 </button>
                             </div>
                         }
@@ -84,8 +82,7 @@ export default function Header() {
                             
                                 <>
                                     <div className="origin-top-right absolute z-50 right-14 top-16 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                        <form action="/dashboard"><button type="submit" onClick={(e) => { showNav(e) }} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</button></form>
-                                        <Link to="/" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</Link>
+                                        <button type="submit" onClick={(e) => { showNav(e) }} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0"><Link to="/dashboard">Your Profile</Link></button>
                                         <button onClick={(e) => { logOut(); killTour(); showNav(e) }} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Log out</button>
                                     </div>
                                 </>

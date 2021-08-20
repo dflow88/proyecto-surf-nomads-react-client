@@ -21,6 +21,20 @@ const reducers = (globalState, action) => {
                 authStatus: null
             }
 
+        case "REDIRECT_URL":
+
+        return {
+            ...globalState,
+            redirect_url: action.payload
+        }
+
+        case "ERASE_REDIRECTION":
+
+        return {
+            ...globalState,
+            redirect_url: ""
+        }
+
         case "LOGIN_SUCCESS":
         case "REGISTER_SUCCESS":
 

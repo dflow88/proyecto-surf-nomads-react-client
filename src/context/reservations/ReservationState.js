@@ -8,7 +8,20 @@ const ReservationState = (props) => {
 
 
     const initialState = {
-        reservations: []
+        reservations: [],
+        userReservations: [],
+        reservation: {
+            startDate: "",
+            endDate: "",
+            user: [],
+            guide: "",
+            tour: [],
+            totalPrice: 0,
+            totalPrice: 0,
+            totalDays: 0,
+            isPaid: false,
+            reservationId: ""
+        }
     }
 
     const [ globalState, dispatch ] = useReducer(ReservationReducer, initialState)
@@ -29,32 +42,65 @@ const ReservationState = (props) => {
         }
     }
 
+    const findReservationsByUser = async () => {
+
+        const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations`)
+        .then((res) => {
+            dispatch({
+                type: "GET_USER_RESERVATIONS",
+                payload: ({ user: res.data._id})
+            })
+        })
+        //     console.log(loggedUser)
+
+        // try {
+        //     const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/reservations-user`)
+        //     .then((res) => {})
+        //     console.log(res)
+        // //     console.log(res)
+        //     // const updatedReservations = res.data
+        //     // console.log(updatedReservations)
+
+        .catch((error) => {
+            console.log(error)
+        })
+    }
 
     const createReservation = async (dataForm) => {
         try {
-            const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/create`, dataForm)
+            const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/create`, dataForm)
+            const createdReservation = res.data
 
-
+            dispatch({
+                type: "CREATED_RESERVATION",
+                payload: createdReservation
+            })
         } catch (error) {
 
         }
     }
 
-    const updateReservation = async (dataForm) => {
+    const findReservationCreated = async () => {
+        try {
+            const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/find-created`)
+            console.log(res.data)
+            dispatch({
+                type: "FIND_CREATED",
+                payload: res.data
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const updateReservationStatus = async (dataForm) => {
+        console.log(dataForm)
         const form = {
             reservationId: dataForm._id,
-            name: dataForm.name,
-            area: dataForm.area,
-            country: dataForm.country,
-            guide: dataForm.guide,
-            priceDay: dataForm.priceDay,
-            description: dataForm.description,
-            amenities: dataForm.amenities
+            isPaid: true
         }
-            const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/update`, form )
+            const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/edit-status`, form )
             
-            getReservations()
-
     }
 
     const deleteReservation = async (dataForm) => {
@@ -73,11 +119,13 @@ const ReservationState = (props) => {
             value={{
                 reservations: globalState.reservations,
                 reservation: globalState.reservation,
-                allAmenities: globalState.allAmenities,
                 getReservations,
                 createReservation,
-                updateReservation,
+                updateReservationStatus,
                 deleteReservation,
+                findReservationCreated,
+                findReservationsByUser,
+                userReservations: globalState.userReservations
             }}
         >
             {props.children}

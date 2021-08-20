@@ -17,7 +17,8 @@ import TourSpecs from './components/TourSpecs'
 import Guides from './components/Guides'
 import SignupGuide from './components/SignupGuide'
 import Dashboard from './components/Dashboard'
-import Stripe from './components/Stripe'
+import Checkout from './components/Checkout'
+import PaymentCompleted from './components/paymentStatus/PaymentCompleted'
 
 import UserState from './context/users/UserState'
 import TourState from './context/tours/TourState'
@@ -51,8 +52,10 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/tours" component={Tours} />
           <Route exact path="/guides" component={Guides} />
+          <PrivateRoute exact path="/checkout" component={Checkout} />
           <PrivateRoute exact path="/tour-specs/:tourId" component={TourSpecs} />
-          <Route exact path="/stripe" component={Stripe} /> {/* NO PUEDO DARLE A PRIVATE CON ESTA */}
+          <PrivateRoute exact path="/payment-completed" component={PaymentCompleted} />
+          
 
         </Switch>
         

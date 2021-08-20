@@ -15,19 +15,19 @@ export default (globalState, action) => {
                 tour: action.payload
             }
 
-        case "GET_AMENITIES":
+        // case "GET_AMENITIES":
             
-            return {
-                ...globalState,
-                allAmenities: action.payload
-            }
+        //     return {
+        //         ...globalState,
+        //         allAmenities: action.payload
+        //     }
             
         case "KILL_TOUR":
         
             return {
                 ...globalState,
                 tour: {
-                    amenities: []
+                    // amenities: []
                 }
             }
 

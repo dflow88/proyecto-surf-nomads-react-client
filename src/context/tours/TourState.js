@@ -10,9 +10,9 @@ const TourState = (props) => {
     const initialState = {
         tours: [],
         tour: {
-            amenities: []
+            // amenities: []
         },
-        allAmenities: []
+        // allAmenities: []
     }
 
     const [ globalState, dispatch ] = useReducer(TourReducer, initialState)
@@ -33,20 +33,20 @@ const TourState = (props) => {
         }
     }
 
-    const getAmenities = async () => {
-        try {
-            const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/amenities`)
-            const foundAmenities = res.data.amenities
+    // const getAmenities = async () => {
+    //     try {
+    //         const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/amenities`)
+    //         const foundAmenities = res.data.amenities
 
-            dispatch({
-                type: "GET_AMENITIES",
-                payload: foundAmenities
-            })
+    //         dispatch({
+    //             type: "GET_AMENITIES",
+    //             payload: foundAmenities
+    //         })
 
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     const findTour = async (id) => {
         try {
@@ -97,11 +97,14 @@ const TourState = (props) => {
             guide: dataForm.guide,
             priceDay: dataForm.priceDay,
             description: dataForm.description,
-            amenities: dataForm.amenities
+            picture1: dataForm.picture1,
+            picture2: dataForm.picture2,
+            picture3: dataForm.picture3,
+            picture4: dataForm.picture4
+            // amenities: dataForm.amenities
         }
-            const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/tours/update`, form )
+            const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/tours/edit`, form )
             
-            getTours()
 
     }
 
@@ -127,14 +130,14 @@ const TourState = (props) => {
             value={{
                 tours: globalState.tours,
                 tour: globalState.tour,
-                allAmenities: globalState.allAmenities,
+                // allAmenities: globalState.allAmenities,
                 getTours,
                 createTour,
                 updateTour,
                 deleteTour,
                 findTourByGuideId,
                 findTour,
-                getAmenities,
+                // getAmenities,
                 killTour
             }}
         >

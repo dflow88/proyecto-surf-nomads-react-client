@@ -1,4 +1,4 @@
-import React, {useState,
+import React, {
     useContext, useEffect} from 'react'
 
 import UserContext from '../../context/users/UserContext'
@@ -9,12 +9,9 @@ export default function Reservations() {
 
     const contextReservation = useContext(ReservationContext)
     const {
-        getReservations,
-        reservations,
+        findReservationsByUser,
+        userReservations
     } = contextReservation
-
-
-    const [userReservations, setUserReservations] = useState([])
 
 
 
@@ -23,33 +20,17 @@ export default function Reservations() {
         user
     } = contextUser
 
-    console.log(reservations[0])
 
-    const findReservations = (role) => {
+console.log(user)
 
-        const resFound = []
-        if (role.role === "user") {
-            reservations.map((res) => {
-                if (role._id === res.user[0]._id) {
-                    console.log(resFound)
-                    resFound.push()
-                    
-                }
-            })
-            setUserReservations(resFound)
-            
-        }
-    }
+    useEffect(() => {
 
-    console.log(userReservations)
-
-    useEffect( async () => {
-
-        await getReservations()
-        findReservations(user)
+        findReservationsByUser(user)
         
         // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [])
+
+    console.log(userReservations)
 
     return (
         <div>

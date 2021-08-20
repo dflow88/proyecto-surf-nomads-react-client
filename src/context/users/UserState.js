@@ -14,10 +14,12 @@ const UserState = (props) => {
             email: ""
         },
         authStatus: null,
-        token: null
+        token: null,
+        redirect_url: ""
     }
 
     const [ globalState, dispatch ] = useReducer(UserReducer, initialState)
+
 
     const registerUser = async (dataForm) => {
 
@@ -38,6 +40,25 @@ const UserState = (props) => {
                 // })
         }
         
+    }
+
+    const updateUser = async (dataForm, currentUser) => {
+
+        const form = {
+            userId: currentUser._id,
+            firstName: dataForm.firstName,
+            lastName: dataForm.lastName,
+            email: dataForm.email,
+            picture: dataForm.picture
+            }
+
+        try {
+            const res = await axiosClient.post("/api/users/edit", form)
+
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
     const verifyingToken = async () => {
@@ -99,14 +120,41 @@ const UserState = (props) => {
 
     }
 
+    const generateCheckout = async (dataForm) => {
+        console.log(dataForm)
+
+        try {
+            const res = await axiosClient.post('/api/sessions/create-checkout-session', dataForm)
+
+            console.log(res)
+
+            dispatch({
+                type: "REDIRECT_URL",
+                payload: res.data.redirect_url,
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const eraseRedirect = () => {
+        dispatch({
+            type: "ERASE_REDIRECTION"
+        })
+    }
+
     return (
         <UserContext.Provider value={{
             user: globalState.user,
             authStatus: globalState.authStatus,
             token: globalState.token,
+            redirect_url: globalState.redirect_url,
             registerUser,
             verifyingToken,
             loginUser,
+            generateCheckout,
+            eraseRedirect,
+            updateUser,
             logOut
         }}>
 

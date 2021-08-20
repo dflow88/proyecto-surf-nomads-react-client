@@ -15,8 +15,8 @@ export default function ManageTour() {
         createTour,
         updateTour,
         deleteTour,
-        getAmenities,
-        allAmenities,
+        // getAmenities,
+        // allAmenities,
         findTour
     } = context
 
@@ -34,13 +34,13 @@ export default function ManageTour() {
 
 
 
-    const [ checkboxValue, setCheckboxValue ] = useState(
-        new Array(allAmenities.length).fill(false)
-    )
+    // const [ checkboxValue, setCheckboxValue ] = useState(
+    //     new Array(allAmenities.length).fill(false)
+    // )
 
-    const handleCheck = (event) => {
-        setCheckboxValue(!checkboxValue)
-    }
+    // const handleCheck = (event) => {
+    //     setCheckboxValue(!checkboxValue)
+    // }
     
 
     const activateCreate = (event) => {
@@ -54,9 +54,13 @@ export default function ManageTour() {
         description:"",
         priceDay:"",
         country: "",
-        amenities: [],
+        // amenities: [],
         area: "",
-        guide: user._id
+        guide: user._id,
+        picture1: "",
+        picture2: "",
+        picture3: "",
+        picture4: ""
     })
 
 
@@ -111,8 +115,8 @@ export default function ManageTour() {
         getTours()
 
         findTourbyGuideId(user._id)
-        setCheckboxValue(false)
-        getAmenities()
+        // setCheckboxValue(false)
+        // getAmenities()
         
         // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [])
@@ -135,7 +139,7 @@ export default function ManageTour() {
                         {/* CREATE/EDIT THE TOUR */}
 
                     { editActive || createActive ?
-                        <div className="mt-6">
+                        <div className="mt-6 grid grid-cols-2">
                             <form className="space-y-6" onSubmit={(e)=> { sendForm(e) }}>
 
                                 <div>
@@ -143,8 +147,8 @@ export default function ManageTour() {
                                         Tour Name
                                     </label>
                                     <div className="mt-1">
-                                        <input id="name" name="name" type="text" required
-                                            className="appearance-none block w-1/2 px-5 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
+                                        <input id="name" name="name" defaultValue={tour.name} type="text" required
+                                            className="appearance-none block w-4/5 px-5 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             onChange={(e)=> { handleChange(e) }}
                                         />
                                     </div>
@@ -155,8 +159,8 @@ export default function ManageTour() {
                                         Short description
                                     </label>
                                     <div className="mt-1">
-                                        <textarea id="shortDescription" name="shortDescription" type="text" required
-                                            className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
+                                        <textarea id="shortDescription" defaultValue={tour.shortDescription} name="shortDescription" type="text" required
+                                            className="appearance-none block w-4/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"
                                             onChange={(e)=> { handleChange(e) }}/>
                                     </div>
                                 </div>           
@@ -169,9 +173,10 @@ export default function ManageTour() {
                                         <textarea 
                                             id="description" 
                                             name="description" 
+                                            defaultValue={tour.description}
                                             type="text" 
                                             required 
-                                            className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
+                                            className="appearance-none block w-4/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
                                             onChange={(e) => { handleChange(e) }}/>
                                     </div>
                                 </div>
@@ -186,8 +191,9 @@ export default function ManageTour() {
                                             id="country" 
                                             name="country" 
                                             type="text" 
+                                            defaultValue={tour.country}
                                             required 
-                                            className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
+                                            className="appearance-none block w-4/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
                                             onChange={(e) => { handleChange(e) }}
                                             >
                                             <option value="">Choose the tour country</option>
@@ -208,8 +214,9 @@ export default function ManageTour() {
                                             id="area" 
                                             name="area" 
                                             type="text" 
+                                            defaultValue={tour.area}
                                             required 
-                                            className="appearance-none block w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
+                                            className="appearance-none block w-4/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
                                             onChange={(e) => { handleChange(e) }}
                                         />
                                     </div>
@@ -223,14 +230,81 @@ export default function ManageTour() {
                                         <input 
                                             id="priceDay" 
                                             name="priceDay" 
+                                            defaultValue={tour.priceDay}
                                             type="number" 
                                             required 
-                                            className="appearance-none block w-1/12 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
+                                            className="appearance-none block w-1/6 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
                                             onChange={(e) => { handleChange(e) }}/>
                                     </div>
-                                </div>                
+                                </div>   
 
-                                <div class="space-y-6 sm:space-y-5 divide-y divide-gray-200">        
+                                <div className="space-y-1">
+                                    <label htmlFor="picture1" className="block text-sm font-medium text-gray-700">
+                                        Picture 1
+                                    </label>
+                                    <div className="mt-1">
+                                        <input 
+                                            id="area" 
+                                            name="picture1" 
+                                            type="text" 
+                                            defaultValue={tour.picture1}
+                                            required 
+                                            className="appearance-none block w-4/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
+                                            onChange={(e) => { handleChange(e) }}
+                                        />
+                                    </div>
+                                </div>               
+                                <div className="space-y-1">
+                                    <label htmlFor="picture2" className="block text-sm font-medium text-gray-700">
+                                        Picture 2
+                                    </label>
+                                    <div className="mt-1">
+                                        <input 
+                                            id="area" 
+                                            name="picture2" 
+                                            defaultValue={tour.picture2}
+                                            type="text" 
+                                            required 
+                                            className="appearance-none block w-4/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
+                                            onChange={(e) => { handleChange(e) }}
+                                        />
+                                    </div>
+                                </div>  
+                                <div className="space-y-1">
+                                    <label htmlFor="picture3" className="block text-sm font-medium text-gray-700">
+                                        Picture 3
+                                    </label>
+                                    <div className="mt-1">
+                                        <input 
+                                            id="area" 
+                                            name="picture3" 
+                                            defaultValue={tour.picture3}
+                                            type="text" 
+                                            required 
+                                            className="appearance-none block w-4/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
+                                            onChange={(e) => { handleChange(e) }}
+                                        />
+                                    </div>
+                                </div>  
+                                <div className="space-y-1">
+                                    <label htmlFor="picture4" className="block text-sm font-medium text-gray-700">
+                                        Picture 4
+                                    </label>
+                                    <div className="mt-1">
+                                        <input 
+                                            id="area" 
+                                            name="picture4" 
+                                            type="text" 
+                                            defaultValue={tour.picture4}
+                                            required 
+                                            className="appearance-none block w-4/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" 
+                                            onChange={(e) => { handleChange(e) }}
+                                        />
+                                    </div>
+                                </div> 
+
+
+                                {/* <div class="space-y-6 sm:space-y-5 divide-y divide-gray-200">        
                                     <div role="group" aria-labelledby="label-amenities">
                                         <div class="sm:grid sm:grid-cols-1 sm:gap-4 ">
                                             <div>
@@ -238,7 +312,7 @@ export default function ManageTour() {
                                                     Amenities
                                                 </div>
                                             </div>
-                                                <select class="w-1/2 h-full" type="text" name="amenities" multiple>
+                                                <select class="w-4/5 h-full" type="text" name="amenities" multiple>
                                                     { 
                                                         allAmenities.map((e,i) => {
                                                             return(
@@ -251,7 +325,7 @@ export default function ManageTour() {
                                                 
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div class="pt-5 sm:grid sm:grid-cols-2">
                                     <div class="flex justify-center">
@@ -264,6 +338,12 @@ export default function ManageTour() {
                                     </div>
                                 </div>
                             </form>
+                            <div>
+                                <img src={tour.picture1} alt=""/>
+                                <img src={tour.picture2} alt=""/>
+                                <img src={tour.picture3} alt=""/>
+                                <img src={tour.picture4} alt=""/>
+                            </div>
                         </div>
                             
                     :
@@ -324,7 +404,7 @@ export default function ManageTour() {
                                     </div>
                                 </div>                
 
-                                <div class="space-y-6 sm:space-y-5 divide-y divide-gray-200">        
+                                {/* <div class="space-y-6 sm:space-y-5 divide-y divide-gray-200">        
                                     <div role="group" aria-labelledby="label-amenities">
                                         <div class="sm:grid sm:grid-cols-1 sm:gap-4 ">
                                             <div>
@@ -384,7 +464,7 @@ export default function ManageTour() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div class="pt-5 sm:grid sm:grid-cols-2">
                                     <div class="flex justify-center">

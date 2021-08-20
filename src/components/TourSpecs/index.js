@@ -19,11 +19,12 @@ import paymentPicture from './../../images/paymentPicture.png'
 const moment = require('moment');
 
 
-export default  function TourSpecs() {
+export default  function TourSpecs(props) {
 
     const contextReservation = useContext(ReservationContext)
     const {
-        createReservation
+        createReservation,
+        reservation
     } = contextReservation
 
     const contextTour = useContext(TourContext)
@@ -35,7 +36,10 @@ export default  function TourSpecs() {
 
     const contextUser = useContext(UserContext)
     const {
-        user
+        user,
+        generateCheckout,
+        redirect_url,
+        eraseRedirect
     } = contextUser
 
 
@@ -45,8 +49,22 @@ export default  function TourSpecs() {
 
     const [totalPriceLocal, setTotalPriceLocal] = useState(0) // (PARA LOS EVALUADORES: La logica estuvo bien, pero el sistema no actualizaba el precio, asi que lo hice con una formula para subirlo al contexto global)
 
+    const [newReservation, setNewReservation] = useState({
+        startDate: "",
+        endDate: "",
+        user: [],
+        guide: "",
+        tour: [],
+        totalPrice: 0,
+        totalPrice: 0,
+        totalDays: 0,
+        isPaid: false
+    })
+
+
+
     const onChange = async (dates) => {
-        const [start, end] =await dates;
+        const [start, end] = await dates;
 
         await setStartDateLocal(start);
         await setEndDateLocal(end);
@@ -54,6 +72,17 @@ export default  function TourSpecs() {
 
     const updateTotalPriceLocal = async (event) => {
         event.preventDefault(event)
+        setNewReservation({
+            startDate: startDateLocal,
+            endDate: endDateLocal,
+            user: user._id,
+            guide: tour.guide[0],
+            tour: tour._id,
+            totalPrice: ((endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24) * tour.priceDay),
+            priceDay: tour.priceDay,
+            totalDays: (endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24),
+            isPaid: false
+        })
         await setTotalPriceLocal((endDateLocal - startDateLocal)/(1000*60*60*24)*tour.priceDay)
     }
 
@@ -63,7 +92,6 @@ export default  function TourSpecs() {
         event.preventDefault()
         setConfirmActive(!confirmActive)
     }
-
 
     
     const { tourId }  = useParams()
@@ -75,14 +103,7 @@ export default  function TourSpecs() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [])
 
-    const [newReservation, setNewReservation] = useState({
-        startDate: "",
-        endDate: "",
-        user: [],
-        guide: "",
-        tour: [],
-        totalPrice: 0
-    })
+
 
     const sendForm = async (event) => {
         event.preventDefault()
@@ -94,17 +115,41 @@ export default  function TourSpecs() {
             user: await user._id,
             guide: await tour.guide[0],
             tour: await tour._id,
-            totalPrice: await ((endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24) * tour.priceDay)
+            totalPrice: ((endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24) * tour.priceDay),
+            priceDay: tour.priceDay,
+            totalDays: (endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24),
+            isPaid: false
         })
 
         processCreate()
     }
 
     const processCreate = () => {
-        console.log(newReservation)
         createReservation(newReservation)
     }
-    console.log(tour)
+
+    useEffect(() => {
+        const reloadingPage = () => {
+            if(redirect_url !== ""){
+                const currentUrl = redirect_url
+                eraseRedirect()
+                window.location.assign(currentUrl)                
+            }
+            return
+        }
+        reloadingPage()
+        return
+     }, [redirect_url])
+
+
+     const sendData = async (event) => {
+        event.preventDefault()
+        sendForm(event)
+        return await generateCheckout(newReservation)
+
+     }
+
+
     return (
         <div>
 
@@ -135,18 +180,18 @@ export default  function TourSpecs() {
                 {/* Image gallery */}
                 <div className="mt-6 max-w-2xl mx-auto sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8">
                     <div className="hidden aspect-w-3 aspect-h-4 rounded-lg overflow-hidden lg:block">
-                        <img src="https://scontent.foax2-1.fna.fbcdn.net/v/t1.6435-9/33248050_10214909517745621_931752799354486784_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeGGiXO3WmX9_1bUAuG43MUJ_IlzGTNvBk78iXMZM28GTp0lL9Z8ge2Cs-fZKr3M_b8&_nc_ohc=3a4m_lsRslEAX8K42OA&_nc_ht=scontent.foax2-1.fna&oh=12cda2331d7dce671659cea730215106&oe=613CE0E1" alt="Two each of gray, white, and black shirts laying flat." className="w-full h-full object-center object-cover"/>
+                        <img src={tour.picture1} alt="" className="w-full h-full object-center object-cover"/>
                     </div>
                     <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
                         <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
-                            <img src="https://scontent.foax2-1.fna.fbcdn.net/v/t1.6435-9/65921517_2124485944326726_8480232064879165440_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeELjIakc_ONHXWt1ZBy-n637tDqqi94znTu0OqqL3jOdN71ysBpDMLXaftBvQc-zI8&_nc_ohc=5wWK69F7hYIAX-eWlFp&tn=JifT7AxkWWAeiEu5&_nc_ht=scontent.foax2-1.fna&oh=5b69a7c4c42178419b277352b2b62f4c&oe=613CC6DE" alt="Model wearing plain black basic tee." className="w-full h-full object-center object-cover"/>
+                            <img src={tour.picture2} alt="" className="w-full h-full object-center object-cover"/>
                         </div>
                         <div className="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
-                            <img src="https://scontent.foax2-1.fna.fbcdn.net/v/t1.6435-9/65645888_2124485884326732_557025548547653632_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeHvNcyETxmPRGVr2qHt7akUKQmoDAgUmPcpCagMCBSY96e0_3t8SKji3ebZvS1r190&_nc_ohc=rEkE-0CvisIAX_Fu3Qe&_nc_ht=scontent.foax2-1.fna&oh=d3764fef43cea9a53f938ff4136a8e8c&oe=613D91CC" alt="Model wearing plain gray basic tee." className="w-full h-full object-center object-cover"/>
+                            <img src={tour.picture3} alt="" className="w-full h-full object-center object-cover"/>
                         </div>
                     </div>
                     <div className="aspect-w-4 aspect-h-5 sm:rounded-lg sm:overflow-hidden lg:aspect-w-3 lg:aspect-h-4">
-                        <img src="https://imparcialoaxaca.mx/wp-content/uploads/2020/02/Corren.jpg" className="w-full h-full object-right object-cover"/>
+                        <img src={tour.picture4} alt="" className="w-full h-full object-right object-cover"/>
                     </div>
                 </div>
 
@@ -199,8 +244,21 @@ export default  function TourSpecs() {
                     </div>
                     </div>
 
-                    <form onSubmit={(e) => {updateTotalPriceLocal(e)}} className="mt-10">
 
+                        <DatePicker
+                                selected={startDateLocal}
+                                onChange={(e) => {onChange(e)}}
+                                startDate={startDateLocal}
+                                endDate={endDateLocal}
+                                selectsRange
+                                inline
+                                className="z-0"
+                                /> 
+
+                            { user.role === "user" ?
+                                <button type="submit" onClick={(e) => {updateTotalPriceLocal(e); activateConfirm(e)}} className="mt-10 w-full bg-sky-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Book the tour</button>
+                                : null
+                            } 
                         {/* <div>
                             <h3 className="text-sm text-gray-900 font-medium">Color</h3>
 
@@ -329,21 +387,7 @@ export default  function TourSpecs() {
 
                         </div> */}
 
-                        <DatePicker
-                            selected={startDateLocal}
-                            onChange={(e) => {onChange(e)}}
-                            startDate={startDateLocal}
-                            endDate={endDateLocal}
-                            selectsRange
-                            inline
-                            className="z-0"
-                            /> 
 
-                        { user.role === "user" ?
-                            <button type="submit" onClick={(e) => {activateConfirm(e)}} className="mt-10 w-full bg-sky-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">Book the tour</button>
-                            : null
-                        } 
-                    </form>
 
 
                 </div>
@@ -391,11 +435,11 @@ export default  function TourSpecs() {
                                                     <p class="text-sm text-gray-500">Guide: { tour.guide[0] ? tour.guide[0].firstName : null }</p>
                                                 </div>
                                                 <div class="mt-5 flex flex-wrap space-y-3 sm:space-y-0 sm:space-x-3">
-                                                <form onSubmit={(e) => {sendForm(e)}}>
-                                                    <button type="submit" class="flex-shrink-0 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:flex-1">
-                                                    Proceed to pay
+
+                                                    <button onClick={(e) => { sendData(e) }} class="flex-shrink-0 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:flex-1">
+                                                        Proceed to pay
                                                     </button>
-                                                </form>
+
                                                     <button type="button" onClick={(e) => {activateConfirm(e)}} class="flex-1 w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                                                     Cancel
                                                     </button>
@@ -480,13 +524,6 @@ export default  function TourSpecs() {
 
                     <div className="mt-4">
                         <ul role="list" className="pl-4 list-disc text-sm space-y-2">
-          
-                            {tour.amenities.map((e, i) => {
-                                console.log(e)
-                                return(
-                                    <li key={i} className="text-gray-400"><span className="text-gray-600">{e.name}</span></li>
-                                )
-                            })}
                         
 
                         <li className="text-gray-400"><span className="text-gray-600">Wave recommendations based on wind, swell size, direction</span></li>

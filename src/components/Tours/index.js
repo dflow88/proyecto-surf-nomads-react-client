@@ -39,66 +39,18 @@ console.log(tours)
                         return(
                             <a key={i} href={`/tour-specs/${e._id}`} className="group">
                                 <div className="aspect-w-1 aspect-h-2 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-1 xl:aspect-h-2">
-                                <img src={`${e.pictures[0]}`} alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="w-full h-full object-center object-cover group-hover:opacity-75" />
+                                <img src={e.picture1} alt={e.picture2} className="w-full h-full object-center object-cover group-hover:opacity-75" />
                                 </div>
                                 <h3 className="mt-4 text-sm text-gray-700">
                                 {e.name}
                                 </h3>
                                 <p className="mt-1 text-lg font-medium text-gray-900">
-                                From ${e.priceDay}/day
+                                From US${e.priceDay}/day
                                 </p>
                             </a>
                         )
                     })
                 }
-                    <a href="/tour-specs" className="group">
-                        <div className="aspect-w-1 aspect-h-2 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-1 xl:aspect-h-2">
-                        <img src="https://scontent.foax2-1.fna.fbcdn.net/v/t1.6435-9/33248050_10214909517745621_931752799354486784_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=8bfeb9&_nc_eui2=AeGGiXO3WmX9_1bUAuG43MUJ_IlzGTNvBk78iXMZM28GTp0lL9Z8ge2Cs-fZKr3M_b8&_nc_ohc=3a4m_lsRslEAX8K42OA&_nc_ht=scontent.foax2-1.fna&oh=12cda2331d7dce671659cea730215106&oe=613CE0E1" alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="w-full h-full object-center object-cover group-hover:opacity-75" />
-                        </div>
-                        <h3 className="mt-4 text-sm text-gray-700">
-                        Guided tour in Salina Cruz
-                        </h3>
-                        <p className="mt-1 text-lg font-medium text-gray-900">
-                        From $140/day
-                        </p>
-                    </a>
-
-                    <a href="/" className="group">
-                        <div className="w-full aspect-w-1 aspect-h-2 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-1 xl:aspect-h-2">
-                        <img src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg" alt="Olive drab green insulated bottle with flared screw lid and flat top." className="w-full h-full object-center object-cover group-hover:opacity-75" />
-                        </div>
-                        <h3 className="mt-4 text-sm text-gray-700">
-                        Nomad Tumbler
-                        </h3>
-                        <p className="mt-1 text-lg font-medium text-gray-900">
-                        $35
-                        </p>
-                    </a>
-
-                    <a href="/" className="group">
-                        <div className="w-full aspect-w-1 aspect-h-2 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-1 xl:aspect-h-2">
-                        <img src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg" alt="Person using a pen to cross a task off a productivity paper card." className="w-full h-full object-center object-cover group-hover:opacity-75" />
-                        </div>
-                        <h3 className="mt-4 text-sm text-gray-700">
-                        Focus Paper Refill
-                        </h3>
-                        <p className="mt-1 text-lg font-medium text-gray-900">
-                        $89
-                        </p>
-                    </a>
-
-                    <a href="/" className="group">
-                        <div className="w-full aspect-w-1 aspect-h-2 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-1 xl:aspect-h-2">
-                        <img src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg" alt="Hand holding black machined steel mechanical pencil with brass tip and top." className="w-full h-full object-center object-cover group-hover:opacity-75" />
-                        </div>
-                        <h3 className="mt-4 text-sm text-gray-700">
-                        Machined Mechanical Pencil
-                        </h3>
-                        <p className="mt-1 text-lg font-medium text-gray-900">
-                        $35
-                        </p>
-                    </a>
-
                  {/* More products... */}
                 </div>
             </div>

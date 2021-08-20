@@ -27,7 +27,6 @@ export default function Login() {
     }
 
     const sendData = (event) => {
-        console.log('send data being fired');
         event.preventDefault()
         return loginUser(data)
     }
