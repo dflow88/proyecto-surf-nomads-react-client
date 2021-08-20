@@ -42,9 +42,9 @@ const ReservationState = (props) => {
         }
     }
 
-    const findReservationsByUser = async () => {
+    const findReservationsByUser = async (loggedUser) => {
 
-        const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations`)
+        const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/${loggedUser._id}` )
         .then((res) => {
             dispatch({
                 type: "GET_USER_RESERVATIONS",
@@ -67,8 +67,9 @@ const ReservationState = (props) => {
     }
 
     const createReservation = async (dataForm) => {
+        console.log(dataForm)
         try {
-            const res = await axiosClient.get(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/create`, dataForm)
+            const res = await axiosClient.post(`${process.env.REACT_APP_BACKEND_URL}/api/reservations/create`, dataForm)
             const createdReservation = res.data
 
             dispatch({

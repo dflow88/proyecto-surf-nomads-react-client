@@ -56,7 +56,7 @@ export default  function TourSpecs(props) {
         guide: "",
         tour: [],
         totalPrice: 0,
-        totalPrice: 0,
+        priceDay: 0,
         totalDays: 0,
         isPaid: false
     })
@@ -71,19 +71,22 @@ export default  function TourSpecs(props) {
     }
 
     const updateTotalPriceLocal = async (event) => {
-        event.preventDefault(event)
+        event.preventDefault()
+        const startD = moment(startDateLocal).format("L")
+        const endD = moment(endDateLocal).format("L")
         setNewReservation({
-            startDate: startDateLocal,
-            endDate: endDateLocal,
-            user: user._id,
-            guide: tour.guide[0],
-            tour: tour._id,
+            startDate: startD,
+            endDate: endD,
+            user: await user._id,
+            guide: await tour.guide[0],
+            tour: await tour._id,
             totalPrice: ((endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24) * tour.priceDay),
             priceDay: tour.priceDay,
             totalDays: (endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24),
             isPaid: false
         })
-        await setTotalPriceLocal((endDateLocal - startDateLocal)/(1000*60*60*24)*tour.priceDay)
+
+        await processCreate(newReservation)
     }
 
     const [confirmActive, setConfirmActive] = useState(false)
@@ -105,27 +108,9 @@ export default  function TourSpecs(props) {
 
 
 
-    const sendForm = async (event) => {
-        event.preventDefault()
-        const startD = moment(startDateLocal).format("L")
-        const endD = moment(endDateLocal).format("L")
-        setNewReservation({
-            startDate: startD,
-            endDate: endD,
-            user: await user._id,
-            guide: await tour.guide[0],
-            tour: await tour._id,
-            totalPrice: ((endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24) * tour.priceDay),
-            priceDay: tour.priceDay,
-            totalDays: (endDateLocal - startDateLocal) / (1000 * 60 * 60 * 24),
-            isPaid: false
-        })
 
-        processCreate()
-    }
-
-    const processCreate = () => {
-        createReservation(newReservation)
+    const processCreate = (reser) => {
+        createReservation(reser)
     }
 
     useEffect(() => {
@@ -144,7 +129,6 @@ export default  function TourSpecs(props) {
 
      const sendData = async (event) => {
         event.preventDefault()
-        sendForm(event)
         return await generateCheckout(newReservation)
 
      }

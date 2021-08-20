@@ -23,15 +23,15 @@ export default function Reservations() {
 
 console.log(user)
 
-    useEffect(() => {
-
+    useEffect( () => {
+        console.log(user)
         findReservationsByUser(user)
         
         // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [])
 
     console.log(userReservations)
-
+    
     return (
         <div>
 

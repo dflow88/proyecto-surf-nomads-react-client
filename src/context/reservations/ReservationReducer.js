@@ -8,12 +8,18 @@ export default (globalState, action) => {
                 reservations: action.payload
             }
 
-        case "CREATED_RESERVATION":
         case "FIND_CREATED":
             return {
                 ...globalState,
                 reservation: action.payload
             }
+
+            case "CREATED_RESERVATION":
+                    return {
+                        ...globalState,
+                        reservation: action.payload
+                    }
+        
         
         case "GET_USER_RESERVATIONS":
             return {
